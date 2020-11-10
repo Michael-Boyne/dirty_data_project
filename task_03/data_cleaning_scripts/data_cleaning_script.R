@@ -1,0 +1,16 @@
+library(tidyverse)
+library(assertr)
+library(readxl)
+
+ship_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 1)
+bird_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 2)
+ship_data_codes <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 3)
+bird_data_codes <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 4)
+
+
+ship_data_record <- 
+  ship_data_record %>%
+  rename(
+    record = "RECORD",
+    record_id = "RECORD ID"
+  )

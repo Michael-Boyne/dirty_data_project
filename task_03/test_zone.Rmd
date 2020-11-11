@@ -1,0 +1,91 @@
+---
+title: "Test Zone"
+output: html_notebook
+---
+
+bird_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 2)
+ship_data_codes <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 3)
+bird_data_codes <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 4)
+
+```{r}
+library(tidyverse)
+library(stringr)
+```
+
+
+```{r}
+ship_data_record %>%
+  select(-c(SACT:LONGECELL))
+```
+
+```{r}
+test <- ship_data_record %>%
+  select(-c(SACT:LONGECELL)
+  ) %>%
+  rename(
+    id = "RECORD",
+    record_id = "RECORD ID",
+    date = "DATE",
+    time = "TIME",
+    latitude = "LAT",
+    longitude = "LONG",
+    east_or_west_hemisphere = "EW",
+  ) %>%
+  mutate(
+    time = str_remove(time, "1899-12-31"),
+    time = str_remove(time, "1900-01-01"),
+    east_or_west_hemisphere = str_replace(east_or_west_hemisphere, "E", "Eastern Hemisphere"),
+    east_or_west_hemisphere = str_replace(east_or_west_hemisphere, "W", "Western Hemisphere")
+  ) %>%
+  drop_na()
+
+test
+```
+
+```{r}
+
+test_birds <- bird_data_record %>%
+  select(RECORD, 
+         `RECORD ID`, 
+         `Species common name (taxon [AGE / SEX / PLUMAGE PHASE])`, 
+         `Species  scientific name (taxon [AGE /SEX /  PLUMAGE PHASE])`, 
+         `Species abbreviation`, 
+         COUNT
+  ) %>%
+  rename(
+    record = "RECORD",
+    record_id = "RECORD ID",
+    species_common_name = "Species common name (taxon [AGE / SEX / PLUMAGE PHASE])",
+    species_scientific_name = "Species  scientific name (taxon [AGE /SEX /  PLUMAGE PHASE])",
+    species_abbreviation = "Species abbreviation",
+    count = "COUNT"
+  ) %>%
+  mutate(
+    species_common_name = str_remove_all(species_common_name, "SUBAD"),
+    species_common_name = str_remove_all(species_common_name, "IMM"),
+    species_common_name = str_remove_all(species_common_name, "AD"),
+    species_common_name = str_remove_all(species_common_name, "JUV"),
+    species_common_name = str_remove_all(species_common_name, "PL1"),
+    species_common_name = str_remove_all(species_common_name, "PL2"),
+    species_common_name = str_remove_all(species_common_name, "PL3"),
+    species_common_name = str_remove_all(species_common_name, "PL4"),
+    species_common_name = str_remove_all(species_common_name, "PL5"),
+    species_common_name = na_if(species_common_name, "[NO BIRDS RECORDED]")
+    species_common_name = str_remove_all(species_common_name, "SUBAD"),
+    species_common_name = str_remove_all(species_common_name, "IMM"),
+    species_common_name = str_remove_all(species_common_name, "AD"),
+    species_common_name = str_remove_all(species_common_name, "JUV"),
+    species_common_name = str_remove_all(species_common_name, "PL1"),
+    species_common_name = str_remove_all(species_common_name, "PL2"),
+    species_common_name = str_remove_all(species_common_name, "PL3"),
+    species_common_name = str_remove_all(species_common_name, "PL4"),
+    species_common_name = str_remove_all(species_common_name, "PL5"),
+
+  ) %>%
+  drop_na(species_common_name)
+
+test_birds
+```
+
+
+

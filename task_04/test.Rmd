@@ -1,0 +1,38 @@
+---
+title: "test"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(assertr)
+library(tidyr)
+library(readxl)
+```
+
+```{r}
+boing_boing_candy_fifteen <- read_xlsx("raw_data/boing-boing-candy-2015.xlsx")
+boing_boing_candy_sixteen <- read_xlsx("raw_data/boing-boing-candy-2016.xlsx")
+boing_boing_candy_seventeen <- read_xlsx("raw_data/boing-boing-candy-2017.xlsx")
+
+```
+
+```{r}
+colnames(clean_col_fifteen)
+colnames(clean_col_sixteen)
+colnames(clean_col_seventeen)
+
+```
+
+```{r}
+unique(clean_full_candy[c("candy")])
+```
+
+```{r}
+country <- unique(clean_full_candy[c("country")])
+```
+
+```{r}
+us_tes <- levels(clean_full_candy$country)[levels(clean_full_candy$country) %in% c("us", "Us", "US")] <- "USA"
+```
+

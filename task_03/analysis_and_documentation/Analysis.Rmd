@@ -22,7 +22,8 @@ bird_ship <- read_csv("~/dirty_data_project/task_03/clean_data/clean_bird_ship.c
 bird_ship %>%
   group_by(species_common_name) %>%
   filter(bird_count == 1) %>%
-  summarise(total_count = sum(bird_count))
+  summarise(total_count = sum(bird_count)) %>%
+  slice_max(total_count, n = 1)
 
 ```
 
@@ -32,8 +33,7 @@ bird_ship %>%
 ```{r}
 bird_ship %>%
   group_by(species_common_name) %>%
-  summarise(total_count = sum(bird_count)) %>%
-  slice_max(1)
+  summarise(total_count = sum(bird_count)) 
   
   
 ```
@@ -59,6 +59,7 @@ high_latitude <- bird_ship %>%
 5. How many penguins were seen? (Hint: there are many types of penguin)
 
 ```{r}
-
+bird_ship %>%
+  
 ```
 

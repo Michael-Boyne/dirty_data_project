@@ -3,27 +3,90 @@ title: "Analysis"
 output: html_notebook
 ---
 
+```{r}
+library(tidyverse)
+library(stringr)
+library(readr)
+```
+
+```{r}
+clean_candy <- read_csv("../clean_data/clean_candy.csv", col_types = cols(country = col_character(), gender = col_character()))
+```
+
+```{r}
+clean_candy
+```
+
+
 # 1.4.2 Analysis questions
 
 1. What is the total number of candy ratings given across the three years. (number of candy ratings, not number of raters. Don’t count missing values)
+
+```{r}
+clean_candy %>%
+  select(rating) %>%
+  summarise(n = n()
+)
+```
 
 
 2. What was the average age of people who are going out trick or treating and the average age of people 3. not going trick or treating?
 
 
+```{r}
+clean_candy %>%
+  filter(going_trick_or_treating == "Yes") %>%
+  summarise(average_age = mean(age))
+
+clean_candy %>%
+  filter(going_trick_or_treating == "No") %>%
+  summarise(average_age = mean(age))
+```
+
+
 3. For each of joy, despair and meh, which candy bar revived the most of these ratings?
+
+```{r}
+clean_candy %>%
+  filter(rating == "DESPAIR") %>%
+  group_by(candy) %>%
+  summarise(n = n()) %>%
+  slice_max(n, n = 1)
+```
 
 
 4. How many people rated Starburst as despair?
 
+```{r}
+clean_candy %>%
+  filter(candy == "starburst",
+         rating == "DESPAIR") %>%
+  summarise(n = n())
+```
+
 
 6. What was the most popular candy bar by this rating system for each gender in the dataset?
 
+```{r}
+clean_candy %>%
+  filter(rating == "JOY",
+         gender == "Female") %>%
+  group_by(candy)
+  
+```
 
 7. What was the most popular candy bar in each year?
+
+```{r}
+clean_candy %>%
+  group_by(year) 
+```
 
 
 8. What was the most popular candy bar by this rating for people in US, Canada, UK and all other countries?
 
+```{r}
+
+```
 
 

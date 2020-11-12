@@ -36,6 +36,7 @@ clean_col_fifteen <- clean_col_fifteen %>%
   select(
     year,
     age,
+    going_trick_or_treating,
     candy,
     rating
   )
@@ -66,6 +67,7 @@ clean_col_sixteen <- clean_col_sixteen %>%
     year,
     age,
     gender,
+    going_trick_or_treating,
     country,
     candy,
     rating
@@ -96,6 +98,7 @@ clean_col_seventeen <- clean_col_seventeen %>%
   select(
     year,
     age,
+    going_trick_or_treating,
     gender,
     country,
     candy,
@@ -249,9 +252,15 @@ clean_full_candy <- full_candy %>%
     country = na_if(country, "A tropical island south of the equator"),
     country = na_if(country, "I don't know anymore"),
     country = na_if(country, "See above")
-    ) %>%
-    as.numeric(unlist(clean_full_candy$age))
-adw
+    )
+
+clean_full_candy$age <- as.integer(as.character(clean_full_candy$age))
+
+filtered_candy <- clean_full_candy %>%
+  filter(
+    age >= 1 & age <= 100 
+  )
   
+write_csv(filtered_candy, "clean_data/clean_candy.csv")
 
   

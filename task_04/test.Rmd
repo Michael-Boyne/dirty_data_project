@@ -12,9 +12,7 @@ library(car)
 ```
 
 ```{r}
-boing_boing_candy_fifteen <- read_xlsx("raw_data/boing-boing-candy-2015.xlsx")
-boing_boing_candy_sixteen <- read_xlsx("raw_data/boing-boing-candy-2016.xlsx")
-boing_boing_candy_seventeen <- read_xlsx("raw_data/boing-boing-candy-2017.xlsx")
+clean_col_quest <- read_xlsx("clean_data/clean_candy.csv")
 
 ```
 
@@ -26,7 +24,7 @@ colnames(clean_col_seventeen)
 ```
 
 ```{r}
-unique(clean_full_candy[c("candy")])
+unique(filtered_candy[c("rating")])
 ```
 
 ```{r}
@@ -34,6 +32,9 @@ country <- unique(clean_full_candy[c("country")])
 ```
 
 
+```{r}
+unique(filtered_candy[c("candy")])
+```
 
 
 

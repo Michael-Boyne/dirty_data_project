@@ -109,6 +109,10 @@ clean_col_seventeen <- clean_col_seventeen %>%
 
 full_candy<- bind_rows(clean_col_fifteen,clean_col_sixteen, clean_col_seventeen)
 
+country_pattern <- "us|Us|US|"
+
+country_na_pattern <- 
+
 clean_full_candy <- full_candy %>%
   mutate(
     candy = str_replace(candy, "x100_grand_bar", "100_grand_bar"),
@@ -255,6 +259,8 @@ clean_full_candy <- full_candy %>%
     )
 
 clean_full_candy$age <- as.integer(as.character(clean_full_candy$age))
+
+# filtering age range
 
 filtered_candy <- clean_full_candy %>%
   filter(

@@ -33,7 +33,7 @@ country <- unique(clean_full_candy[c("country")])
 
 
 ```{r}
-unique(filtered_candy[c("candy")])
+unique(filtered_candy[c("country")])
 ```
 
 

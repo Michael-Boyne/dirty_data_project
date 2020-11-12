@@ -7,6 +7,8 @@ output: html_notebook
 library(tidyverse)
 library(stringr)
 library(readr)
+library(dplyr)
+library(tidyr)
 ```
 
 ```{r}
@@ -24,7 +26,7 @@ clean_candy
 
 ```{r}
 clean_candy %>%
-  select(rating) %>%
+  select(candy) %>%
   summarise(n = n()
 )
 ```
@@ -52,6 +54,18 @@ clean_candy %>%
   group_by(candy) %>%
   summarise(n = n()) %>%
   slice_max(n, n = 1)
+
+clean_candy %>%
+  filter(rating == "JOY") %>%
+  group_by(candy) %>%
+  summarise(n = n()) %>%
+  slice_max(n, n = 1)
+
+clean_candy %>%
+  filter(rating == "MEH") %>%
+  group_by(candy) %>%
+  summarise(n = n()) %>%
+  slice_max(n, n = 1)
 ```
 
 
@@ -64,29 +78,50 @@ clean_candy %>%
   summarise(n = n())
 ```
 
+# Mutating despair, joy, and meh to -1, 1, and 0
+
+```{r}
+mutated_clean_candy <- clean_candy %>%
+  mutate(rating_count = recode(rating,
+                         DESPAIR = -1,
+                         MEH = 0,
+                         JOY = 1
+                         ))
+mutated_clean_candy
+```
+clean_full_candy$age <- as.integer(as.character(clean_full_candy$age))
 
 6. What was the most popular candy bar by this rating system for each gender in the dataset?
 
 ```{r}
-clean_candy %>%
-  filter(rating == "JOY",
-         gender == "Female") %>%
-  group_by(candy)
-  
+mutated_clean_candy %>%
+  group_by(gender, candy) %>%
+  summarise(total_preference = sum(rating_count)) %>%
+  filter(candy != "any_full_sized_candy_bar") %>%
+  slice_max(total_preference)
 ```
 
 7. What was the most popular candy bar in each year?
 
 ```{r}
-clean_candy %>%
-  group_by(year) 
+mutated_clean_candy %>%
+  group_by(year, candy) %>%
+  summarise(total_preference = sum(rating_count)) %>%
+  filter(candy != "any_full_sized_candy_bar") %>%
+  slice_max(total_preference)
 ```
 
 
 8. What was the most popular candy bar by this rating for people in US, Canada, UK and all other countries?
 
 ```{r}
-
+mutated_clean_candy %>%
+  mutate(country = if_else(country %in% c("USA", "Canada", "United Kingdom"), country, "other")) %>%
+  filter(year != 2015) %>%
+  group_by(country, candy) %>%
+  summarise(total_preference = sum(rating_count)) %>%
+  filter(candy != "any_full_sized_candy_bar") %>%
+  slice_max(total_preference)
 ```
 
 

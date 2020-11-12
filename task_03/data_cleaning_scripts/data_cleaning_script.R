@@ -77,6 +77,8 @@ recleaned_birds <- clean_birds %>%
     species_abbreviation = str_remove(species_abbreviation, "PL5")
   )
 
+recleaned_birds[!is.na(recleaned_birds$bird_count)]
+
 clean_bird_ship <- left_join(recleaned_birds, clean_ship, "record_id")
 
 write_csv(clean_bird_ship, "clean_data/clean_bird_ship.csv")

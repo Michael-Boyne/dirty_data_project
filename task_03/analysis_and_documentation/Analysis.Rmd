@@ -33,7 +33,7 @@ bird_ship %>%
 ```{r}
 bird_ship %>%
   group_by(species_common_name) %>%
-  summarise(total_count = sum(bird_count)) 
+  summarise(total_count = sum(bird_count))
   
   
 ```
@@ -59,7 +59,9 @@ high_latitude <- bird_ship %>%
 5. How many penguins were seen? (Hint: there are many types of penguin)
 
 ```{r}
+pattern <- "[Pp]enguin"
+
 bird_ship %>%
-  
+  str_detect(pattern)
 ```
 

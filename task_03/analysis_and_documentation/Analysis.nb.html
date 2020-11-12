@@ -1767,8 +1767,111 @@ library(readxl)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmlyZF9zaGlwIDwtIHJlYWRfY3N2KFwifi9kaXJ0eV9kYXRhX3Byb2plY3QvdGFza18wMy9jbGVhbl9kYXRhL2NsZWFuX2JpcmRfc2hpcC5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code>bird_ship &lt;- read_csv(&quot;~/dirty_data_project/task_03/clean_data/clean_bird_ship.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG7ilIDilIAgQ29sdW1uIHNwZWNpZmljYXRpb24g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAXG5jb2xzKFxuICByZWNvcmQgPSBjb2xfZG91YmxlKCksXG4gIHJlY29yZF9pZCA9IGNvbF9kb3VibGUoKSxcbiAgc3BlY2llc19jb21tb25fbmFtZSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgc3BlY2llc19zY2llbnRpZmljX25hbWUgPSBjb2xfY2hhcmFjdGVyKCksXG4gIHNwZWNpZXNfYWJicmV2aWF0aW9uID0gY29sX2NoYXJhY3RlcigpLFxuICBiaXJkX2NvdW50ID0gY29sX2RvdWJsZSgpLFxuICBkYXRlID0gY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpLFxuICBsYXRpdHVkZSA9IGNvbF9kb3VibGUoKSxcbiAgbG9uZ2l0dWRlID0gY29sX2RvdWJsZSgpLFxuICBlYXN0X29yX3dlc3RfaGVtaXNwaGVyZSA9IGNvbF9jaGFyYWN0ZXIoKVxuKVxuIn0= -->
+<pre><code>
+── Column specification ──────────────────────────────────────────────────────────
+cols(
+  record = col_double(),
+  record_id = col_double(),
+  species_common_name = col_character(),
+  species_scientific_name = col_character(),
+  species_abbreviation = col_character(),
+  bird_count = col_double(),
+  date = col_datetime(format = &quot;&quot;),
+  latitude = col_double(),
+  longitude = col_double(),
+  east_or_west_hemisphere = col_character()
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="analysis-questions" class="section level1">
+<h1>1.3.2 Analysis questions</h1>
+<ol style="list-style-type: decimal">
+<li>Which bird had the most individual sightings?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmlyZF9zaGlwICU+JVxuICBncm91cF9ieShzcGVjaWVzX2NvbW1vbl9uYW1lKSAlPiVcbiAgZmlsdGVyKGJpcmRfY291bnQgPT0gMSkgJT4lXG4gIHN1bW1hcmlzZSh0b3RhbF9jb3VudCA9IHN1bShiaXJkX2NvdW50KSlcbmBgYCJ9 -->
+<pre class="r"><code>bird_ship %&gt;%
+  group_by(species_common_name) %&gt;%
+  filter(bird_count == 1) %&gt;%
+  summarise(total_count = sum(bird_count))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCB1bmdyb3VwaW5nIG91dHB1dCAob3ZlcnJpZGUgd2l0aCBgLmdyb3Vwc2AgYXJndW1lbnQpXG4ifQ== -->
+<pre><code>`summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MTY5LCJuY29sIjoyfSwicmRmIjoiSDRzSUFBQUFBQUFBQTRWWjNXOGJ4eEcvS0ZFYVUxK1VTRm9mZHUyTFVlUUxvUVRZU09vQ0FVcUpzbVRIa2tQb0ZNZ09FTmpMdXlWNTVmS1czYnN6elR3SkJmcmE5Zy9vZzEvOWx0ZSsrVS9KbjlESFBzV2R1OTA5N2U0dEdRUHk4T1kzTXpzN096TTdSNTRkUHIxWGVWcHhIT2Q5NS8wUDRmOUYrT2dzZm45KzFMenZPQjhzd01ON3pnZk90WXkrQXJnR0h6Sm1GZjdlQ0dCMVA4QWt4TzRZUi8wMGpBUjNhNTkwVWNKb0hMdWZwVkVZNENnSmV5RU9QaGY0clgxQzNBQ3hJZWdsREJPNzFKMUNLaDVneENZb3dXeVd2U2hCekU5QzM5MXpEeGhGUWJNYkVvSUR0OE5DS3IycVhrbjFVakpDck16bjdnaittc0pYekt4ZXNjRWh5YTByM09rWWF4cjFmZWxibTQ1R05GTDFsZ1FXRDFOVStIUEZjdDNEczhlQ3Y2N3hUNDRmbmhlT0tzQ1Z2R1pIRVpkTEtsN2MzazhJaWpMbUZCTkNKODJJeGhDOUVTVmtPa0tUWWJHUk5FaTdOUG8wVm81RVlMWDlORTRZSWlnT1VlVDJVUlRoUkVic0FER1VncElXM3MwRGd2d2hCT1VDeDlucWdRN2ZLZUJCbU9CbUYveUNFM2ZqaExKUlU1TmM1cElhN3hPVkIwYU9DSTRIelI2bFNXYkQ5TDNDcGVNQjZndk9UczdSVjlWWFdCY1NQTS82S1pIQXh3SmdkQUlBS2lvaHhsR2N1Z1FsVkFoZTF3VE5XRGM0MmtNK2dENHNUeG1ja0F3MkJ5ZGgxTWRHM0pZT1NJcDFWdjJBMHU3VVhqb2JXcm1vV2JzRXlDUnl1NW11em9wb0VFd0xmZGc1Wm5DNDVnWnFCVktLOXhwQWt4elMvTHpkUnFOeEZuSzNPeTh5UzIwME5uYTQzRWJ4T01zN0phZTMyZ09VRE5ESWZSVG4yV1dhMlc3VDRSQmMySE03VTUvUlhtSzZzOVlHRGNUTUFOZEZFUWZoU3dpL25vcEw1UUpmYVZNNk5FMjdHVE1FNHlHYTJ3SnZ0UmtVUis1QjNsL3RVc3RTU3Ezb3c2eHhkaGoxTWVIcldGVnZIcXE3c011c1BSaU5NYVBNYVBMMUl4U3lLWVNQTjFNdGQyb1NPd21UaEdDdDRYRklsZDQrQ2lrTDhrUHk5ZjNLYXRiS04rc1lRUjgzRXhRU1d6VnZ6aTkyNkFWcEFvK3diVEQxRUQ3YkcxcERrU3VCTzBjczdNTnpOMlRCak1nZW82Qkhwbk9QZC9NWWNqYVJJcVVHY1dNR3JQVDQxV09ha3NCTXI5b3h3eWh4ZTRxUFIzTDNPU1E3eDE3Mk9CVk54bUxDMm1FcW1ZN1dCSlp5amlhMGxSdnVRaG5QYUorekZtN2tBTVE3c0pUK3lrTU1WNHloc2FFeDFadXVOdWQwdjBXNFAydWV1R0VGdFR0M3h5NmlTRFMrVGFFaEhVSG1RMkxqbjNTZnE0OHg2NmVZNE1qb09jQWZ3ZGFOVWFSbXNKVU1LRUdQbmtnUDZpYWtlRmMvd1hFTS9xczVjaXF3MzUrRS9VSFNIRUh5NVFVR2hUUzl1c2hrNW9uUzFpdDFYWEJMOFY0cWQ0THFDWVhPSTZ2NGF2NnBtM3hsdDh1bktNNHlTcjJWdGs1bGx0aFBjL1dVSnZsRzlEeDdRbGt5QUcvY3ZsSmwwbVFCTWpwRnBMVDU1UTd5WVExZnZmZXZkK2IxNkVablRoOVk3UXdvanNKWHVoUFhPdm5vY1RXVXJIUW9OTm93d21xME5qU21PaS9XREVRNS9YVWR1dEl4cktrSms0L1Nkdi9YNFo1NW1iRjk0MTZ1enJwYXozQmdHWjBhR1ZzY1BJUjdIUHBaWHNxaVBNdVBBcnAvVms5NVd6YVBaZWRNUDYxeVM3MDFXOEx0bkh3dG8rQWhBdGVpWmFoWkxSRDFBcnZ1WWNSdmd1OHQwYWw1Y0lUMndHMTd2L0ZtYzlzYlFDYkttT3k1WGw2TDVTdFBFeXZCZDcxQmRobFA4a25hUitNeHR5VzNzdWU2Y2xZeTkzdVRhMTZvbXFWQno4dFN4VDVkZWhFTVVMR2JUMndkYlZMeUlqb3hraVZqOGMwbGd5dzVaT1o1a0VITk1VbEhxSFFYclhuVzVsU2RFYWNLNTZ0TnlLTnBNbkE3RklZa3Rhd2FKbDlyL2ptWXRRY3hxUEpyVHNua2VpRlIzbnFqd0N5ZFo5c0tLaFc2WXhkUXZMdGhsN2g0K09qOGdleHZoY2lNL3VhTm9XZnEzV2ZEUy9CZm91elNLNDBiZ0V3UVMrU2tyU2pkOEpUM05YdU9nRGFNR2tOYjNxNTdhUmNWNzlYSzZheWNJOGpJMEhEalBOdVF2VUdkRDhMSTlwS3pmVjYwbVJrVHVLWGJsTnZLNXZ5SjlIYnhpbHVVRXZnVGxaTFovaVpjeVZYVXBOMnh2Qk1iTHlsemx0bmlHSis5TExvYkFtYzBNbDRxYWh3Unc1bE5LVUpqRTlua3lLeTJMbUF4YU9iMXBDN1p1QWhKekVlNHNxY2ZQN04rVzZHZUQ3UnMrSHZUdXVuay8xcFZRWjhMK2dXbmYvNnZlRDYvNVBTUDRybDlxZU5iaHZ3VHc2NGo2RWVDMWdXOWEraEp1Yi85Yk9jZkNEL1FDeDMvUk5BT2x5ejI5Vzh1MTdxdis5a2lMcWVQalgxSS8weS9lOExPcTllNi9ObGJUaTg3dXZ5dW9TK3B1Zi92QlAzSzBlMmlsdjdzWFdwMkpML0FEeTgxK3dWLzlBdW40anhiRjVjNi9pZEIvL0ZLOXpOOG9UOC81NStLdUVoNzM0bDFud2o2ei84Si85OWEvVzJkQ25wbnhqNWtmUDRncUR4SDZZZU1XOVhRNndwL1JSemx1UlQ0MGFWdVIrYkJQVUYvRkhoWDJudk42ZGZHT3ZlTlorblBzNWJ1djF6SHpLZS8vc3pwUlV1WGU5clMxaXY0OTR6MVhyelY4Rko5aUErdHRxQytvSDhYNSt1TGZibUNMODZoV05jMW5yOFI5T1VscDNkbitEWDlGNmRWOFN6NlJZSExjNVR4NkwvVjFpdmtaTjA4RU92SitQN2c2UFpsdlg5bDhQOURPSDBtbnYxZk9KVnhrM0pmQ2hxOTV2UkM0UEljSngxT2o0V2MyZCtRSytTNHZ2Rzd3R0tFUmpoMitHOENDL0tXaU1mWUQzSDgzTSsvREh1ZXljaXBMNkVKSWdDa1VXS1l1c2JvWkZlYVc4bk1aWkY1OSs3ZGhibW1UMUFzMTVUTVNvQVN0TnRqMlZLTzg2dWg4anM2VHVET0I2V0Y3RWVNUlVQNVBXWXcxdElvOHlTQSt6T05odG12SVU0bGgvbS9GZkg1amZKNWdTKzU4RTZZV2hTbVBvU1hRbmlka3I0VDFDMXVyOVhzeTlSc3c3c3drUlJmN1ZhQUcrL21jWkljbnhMSnlmZm0vUHAvczFZSi9ic1pBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["species_common_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["total_count"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie penguin","2":"7"},{"1":"Albatross (unidentified)","2":"4"},{"1":"All dark petrel (unidentified)","2":"124"},{"1":"All dark shearwater (unidentified)","2":"13"},{"1":"Antarctic / Broad-billed Prion","2":"1"},{"1":"Antarctic fulmar","2":"82"},{"1":"Antarctic petrel","2":"23"},{"1":"Antarctic prion","2":"39"},{"1":"Antarctic tern","2":"1"},{"1":"Antarctic type prion","2":"6"},{"1":"Arctic / Common tern","2":"1"},{"1":"Arctic skua","2":"60"},{"1":"Arctic skua  DRK","2":"4"},{"1":"Arctic skua  LGHT","2":"2"},{"1":"Arctic skua DRK","2":"3"},{"1":"Arctic skua LGHT","2":"5"},{"1":"Arctic tern","2":"18"},{"1":"Atlantic yellow-nosed mollymawk","2":"1"},{"1":"Audubon's shearwater","2":"2"},{"1":"Australasian gannet","2":"598"},{"1":"Barau's petrel","2":"1"},{"1":"Black / Westland petrel","2":"2"},{"1":"Black / White-bellied storm-petrel","2":"37"},{"1":"Black petrel","2":"139"},{"1":"Black petrel / Flesh-footed shearwater","2":"1"},{"1":"Black shag","2":"11"},{"1":"Black-bellied storm petrel","2":"65"},{"1":"Black-billed gull","2":"7"},{"1":"Black-browed albatross sensu lato","2":"1816"},{"1":"Black-browed mollymawk","2":"24"},{"1":"Black-faced cormorant","2":"6"},{"1":"Black-winged petrel","2":"225"},{"1":"Blue petrel","2":"55"},{"1":"Booby (unidentified)","2":"1"},{"1":"Broad-billed prion","2":"3"},{"1":"Brown booby","2":"4"},{"1":"Brown noddy","2":"2"},{"1":"Buller's mollymawk","2":"179"},{"1":"Buller's shearwater","2":"394"},{"1":"Bulwer's petrel","2":"1"},{"1":"Campbell black-browed mollymawk","2":"75"},{"1":"Cape petrel","2":"522"},{"1":"Caspian tern","2":"2"},{"1":"Chatham Island mollymawk","2":"15"},{"1":"Cokk's / Pycroft's petrel","2":"2"},{"1":"Collared petrel","2":"2"},{"1":"Common diving-petrel","2":"3"},{"1":"Common tern","2":"5"},{"1":"Cook's petrel","2":"62"},{"1":"Cookilaria petrel (unidentified)","2":"21"},{"1":"Crested penguin (unidentified)","2":"1"},{"1":"Crested tern","2":"138"},{"1":"Dark Procellaria (unidentified)","2":"1"},{"1":"Diving-petrel (unidentified)","2":"78"},{"1":"Emperor penguin","2":"2"},{"1":"Fairy / fulmar prion","2":"1"},{"1":"Fairy / Little tern","2":"1"},{"1":"Fairy prion","2":"41"},{"1":"Fiordland crested penguin","2":"3"},{"1":"Flesh-footed / Wedge-tailed shearwater","2":"1"},{"1":"Flesh-footed shearwater","2":"239"},{"1":"Fluttering / Hutton's shearwater","2":"13"},{"1":"Fluttering shearwater","2":"94"},{"1":"Frigatebird (unidentified)","2":"1"},{"1":"Gadfly petrel (unidentified)","2":"25"},{"1":"Giant petrel sensu lato","2":"975"},{"1":"Giant petrel sensu lato DRK","2":"2"},{"1":"Gould's petrel","2":"203"},{"1":"Great frigatebird F","2":"2"},{"1":"Great-winged / Grey-faced petrel","2":"125"},{"1":"Great-winged petrel","2":"4"},{"1":"Grey noddy","2":"13"},{"1":"Grey petrel","2":"63"},{"1":"Grey-backed storm petrel","2":"61"},{"1":"Grey-faced petrel","2":"1023"},{"1":"Grey-headed mollymawk","2":"142"},{"1":"Herald petrel","2":"2"},{"1":"Herald petrel LGHT","2":"1"},{"1":"Hutton's shearwater","2":"58"},{"1":"Jaeger (unidentified)","2":"9"},{"1":"Jaeger (unidentified)  LGHT","2":"1"},{"1":"Jaeger (unidentified) LGHT","2":"1"},{"1":"Juan Fernandez petrel","2":"3"},{"1":"Kerguelen petrel","2":"10"},{"1":"Kermadec petrel","2":"7"},{"1":"Kermadec petrel DRK","2":"2"},{"1":"Kermadec petrel INT","2":"5"},{"1":"Kermadec petrel LGHT","2":"4"},{"1":"Lesser frigatebird M","2":"1"},{"1":"Light-mantled sooty albatross","2":"147"},{"1":"Little penguin","2":"21"},{"1":"Little shearwater","2":"75"},{"1":"Little tern","2":"1"},{"1":"Long-tailed skua","2":"45"},{"1":"Long-tailed skua DRK","2":"2"},{"1":"Masked booby","2":"6"},{"1":"Mollymawk (unidentified)","2":"19"},{"1":"Mottled petrel","2":"118"},{"1":"Northern giant petrel","2":"144"},{"1":"Northern royal albatross","2":"149"},{"1":"Pacific gull","2":"22"},{"1":"Penguin (unidentified)","2":"1"},{"1":"Petrel (unidentified)","2":"24"},{"1":"Phoenix petrel","2":"1"},{"1":"Pied shag","2":"5"},{"1":"Pomarine skua","2":"101"},{"1":"Pomarine skua  DRK","2":"3"},{"1":"Pomarine skua  LGHT","2":"2"},{"1":"Pomarine skua DRK","2":"3"},{"1":"Pomarine skua LGHT","2":"4"},{"1":"Prion (unidentified)","2":"283"},{"1":"Providence petrel","2":"93"},{"1":"Pycroft's petrel","2":"2"},{"1":"Red-billed gull","2":"97"},{"1":"Red-tailed tropicbird","2":"22"},{"1":"Royal / Wandering albatross","2":"2"},{"1":"Royal albatross sensu lato","2":"19"},{"1":"Royal albatross sensu lato PL6","2":"1"},{"1":"Salvin's mollymawk","2":"134"},{"1":"Salvin's prion","2":"2"},{"1":"Seabird (Unidentified)","2":"1"},{"1":"Shag (unidentified)","2":"2"},{"1":"Shearwater (unidentified)","2":"32"},{"1":"Short-tailed / Sooty shearwater","2":"38"},{"1":"Short-tailed shearwater","2":"152"},{"1":"Shy / white-capped / Salvin's /  Chatham mollymawk","2":"687"},{"1":"Shy / White-capped mollymawk","2":"157"},{"1":"Skua (unidentified)","2":"8"},{"1":"Snares Cape Petrel","2":"9"},{"1":"Snow petrel","2":"22"},{"1":"Snowy sheathbill","2":"8"},{"1":"Soft-plumaged petrel","2":"22"},{"1":"Sooty albatross","2":"28"},{"1":"Sooty shearwater","2":"360"},{"1":"Sooty tern","2":"18"},{"1":"South Polar skua","2":"19"},{"1":"South Polar skua LGHT","2":"1"},{"1":"Southern black-backed gull","2":"409"},{"1":"Southern Cape Petrel","2":"4"},{"1":"Southern giant petrel","2":"82"},{"1":"Southern giant petrel DRK","2":"1"},{"1":"Southern giant petrel LGHT","2":"7"},{"1":"Southern giant petrel WHITE","2":"3"},{"1":"Southern royal albatross","2":"190"},{"1":"Spotted shag","2":"8"},{"1":"Stejneger's petrel","2":"1"},{"1":"Stewart Island shag","2":"15"},{"1":"Storm-petrel (unidentified)","2":"43"},{"1":"Streaked shearwater","2":"5"},{"1":"Subantarctic skua","2":"104"},{"1":"Tahiti petrel","2":"4"},{"1":"Tern (unidentified)","2":"11"},{"1":"Thin-billed prion","2":"21"},{"1":"Tropicbird (unidentified)","2":"4"},{"1":"Wandering albatross sensu lato","2":"6508"},{"1":"Wedge-tailed shearwater","2":"100"},{"1":"Westland / White-chinned petrel","2":"159"},{"1":"Westland petrel","2":"134"},{"1":"White tern","2":"4"},{"1":"White-bellied storm petrel","2":"14"},{"1":"White-chinned petrel","2":"245"},{"1":"White-faced storm petrel","2":"95"},{"1":"White-fronted tern","2":"101"},{"1":"White-headed petrel","2":"373"},{"1":"White-naped petrel","2":"46"},{"1":"White-tailed tropicbird","2":"6"},{"1":"White-winged black tern","2":"1"},{"1":"Wilson's storm petrel","2":"137"},{"1":"Yellow-nosed mollymawk sensu lato","2":"378"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[169]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: decimal">
+<li>Which bird had the highest total count?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmlyZF9zaGlwICU+JVxuICBncm91cF9ieShzcGVjaWVzX2NvbW1vbl9uYW1lKSAlPiVcbiAgc3VtbWFyaXNlKHRvdGFsX2NvdW50ID0gc3VtKGJpcmRfY291bnQpKSAlPiVcbiAgc2xpY2VfbWF4KDEpXG5gYGAifQ== -->
+<pre class="r"><code>bird_ship %&gt;%
+  group_by(species_common_name) %&gt;%
+  summarise(total_count = sum(bird_count)) %&gt;%
+  slice_max(1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCB1bmdyb3VwaW5nIG91dHB1dCAob3ZlcnJpZGUgd2l0aCBgLmdyb3Vwc2AgYXJndW1lbnQpXG4ifQ== -->
+<pre><code>`summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVF3V29DTVJDZGpVWnhpeUw0QS83QUxvaVhudHUxMEV1RnJRV2hGRW5YMkM3Tkpzc21TM3RydjZWZjJaTjJzaVlneVdFeWVTL3padDdrMlhZWmIyTUE2RUZ2Z0pGaUN2UnBjNWRjQS9RSlBpTG93OGplWDBqUE1MSGc5SUtZUFQrczV6ZjNlZlk0ejFlMzZ6eGJaUzhJVCt5WDd6K3JOL3dOdEtoa0ZkZE9oM2dkWGZPaTVIcFhxS3BTY21mL09PcktLTU1FRXEwMGdkU29VWitwbHh0YnVSOE1KenhoejBJd3JZUFo0ejB6TEQwMHRoWEFNU2dacXRxVVNtSVJzY1pwVUJ3MUFUQnRwWjFrbnhUdnJmeElGa3Zib2VQUForenk2Q0luNTU3azVMU28weHB3K1ZaS3Z3QXEyQ3NYN2pGQnk1M2p0RzVLWElpemdxaE91MFY1cEZEQ0k1MDVPUDREYkVXa2N2QUJBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["species_common_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["total_count"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"[NO BIRDS RECORDED]","2":"NA"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTkFcbk5BXG5gYGAifQ== -->
+<pre class="r"><code>NA
+NA</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="3" style="list-style-type: decimal">
+<li>Which bird had the highest total count above a latitude of -30?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlnaF9sYXRpdHVkZSA8LSBiaXJkX3NoaXAgJT4lXG4gIFxuICBcbiAgXG5gYGAifQ== -->
+<pre class="r"><code>high_latitude &lt;- bird_ship %&gt;%
+  
+  
+  </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="4" style="list-style-type: decimal">
+<li>How many different types of birds were only ever seen in groups of 1?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="5" style="list-style-type: decimal">
+<li>How many penguins were seen? (Hint: there are many types of penguin)</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KHJlYWR4bCkKYGBgCgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KHJlYWR4bCkKYGBgCgpgYGB7cn0KYmlyZF9zaGlwIDwtIHJlYWRfY3N2KCJ+L2RpcnR5X2RhdGFfcHJvamVjdC90YXNrXzAzL2NsZWFuX2RhdGEvY2xlYW5fYmlyZF9zaGlwLmNzdiIpCmBgYAoKCiMgMS4zLjIgQW5hbHlzaXMgcXVlc3Rpb25zCgoKMS4gV2hpY2ggYmlyZCBoYWQgdGhlIG1vc3QgaW5kaXZpZHVhbCBzaWdodGluZ3M/CgpgYGB7cn0KYmlyZF9zaGlwICU+JQogIGdyb3VwX2J5KHNwZWNpZXNfY29tbW9uX25hbWUpICU+JQogIGZpbHRlcihiaXJkX2NvdW50ID09IDEpICU+JQogIHN1bW1hcmlzZSh0b3RhbF9jb3VudCA9IHN1bShiaXJkX2NvdW50KSkKCmBgYAoKCjIuIFdoaWNoIGJpcmQgaGFkIHRoZSBoaWdoZXN0IHRvdGFsIGNvdW50PwoKYGBge3J9CmJpcmRfc2hpcCAlPiUKICBncm91cF9ieShzcGVjaWVzX2NvbW1vbl9uYW1lKSAlPiUKICBzdW1tYXJpc2UodG90YWxfY291bnQgPSBzdW0oYmlyZF9jb3VudCkpICU+JQogIHNsaWNlX21heCgxKQogIAogIApgYGAKCgozLiBXaGljaCBiaXJkIGhhZCB0aGUgaGlnaGVzdCB0b3RhbCBjb3VudCBhYm92ZSBhIGxhdGl0dWRlIG9mIC0zMD8KCmBgYHtyfQpoaWdoX2xhdGl0dWRlIDwtIGJpcmRfc2hpcCAlPiUKICAKICAKICAKYGBgCgoKNC4gSG93IG1hbnkgZGlmZmVyZW50IHR5cGVzIG9mIGJpcmRzIHdlcmUgb25seSBldmVyIHNlZW4gaW4gZ3JvdXBzIG9mIDE/CgpgYGB7cn0KCmBgYAoKCjUuIEhvdyBtYW55IHBlbmd1aW5zIHdlcmUgc2Vlbj8gKEhpbnQ6IHRoZXJlIGFyZSBtYW55IHR5cGVzIG9mIHBlbmd1aW4pCgpgYGB7cn0KCmBgYAoK</div>
 
 
 

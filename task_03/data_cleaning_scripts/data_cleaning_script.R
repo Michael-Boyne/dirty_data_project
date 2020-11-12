@@ -28,7 +28,7 @@ clean_ship <- ship_data_record %>%
 
 clean_birds_cols <- tibble::as_tibble(bird_data_record, .name_repair = janitor::make_clean_names)
 
-pattern <- "[A-Z]{2}+"
+pattern <- "AD|IMM|SUBAD|SUB|JUV|PL1|PL2|PL3|PL4|PL5"
 
 recleaned_birds <- clean_birds %>%
   select(

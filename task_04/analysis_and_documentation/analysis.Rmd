@@ -37,12 +37,9 @@ clean_candy %>%
 
 ```{r}
 clean_candy %>%
-  filter(going_trick_or_treating == "Yes") %>%
+  group_by(going_trick_or_treating) %>%
   summarise(average_age = mean(age))
 
-clean_candy %>%
-  filter(going_trick_or_treating == "No") %>%
-  summarise(average_age = mean(age))
 ```
 
 
@@ -50,22 +47,10 @@ clean_candy %>%
 
 ```{r}
 clean_candy %>%
-  filter(rating == "DESPAIR") %>%
-  group_by(candy) %>%
+  group_by(rating, candy) %>%
   summarise(n = n()) %>%
-  slice_max(n, n = 1)
+  slice_max(n)
 
-clean_candy %>%
-  filter(rating == "JOY") %>%
-  group_by(candy) %>%
-  summarise(n = n()) %>%
-  slice_max(n, n = 1)
-
-clean_candy %>%
-  filter(rating == "MEH") %>%
-  group_by(candy) %>%
-  summarise(n = n()) %>%
-  slice_max(n, n = 1)
 ```
 
 

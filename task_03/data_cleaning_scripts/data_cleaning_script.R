@@ -13,6 +13,9 @@ ship_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls",
 bird_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 2)
 
 # Cleaning the ship_data_record
+# The only columns that were really necessary to answer the questions were the record_id (which
+# is the primary key for this sheet and the foreign key in the bird_record), date, latitude,
+# longitude, and east_or_west_hemisphere. 
 
 clean_ship <- ship_data_record %>%
   select(-c(RECORD, TIME, SACT:LONGECELL)
@@ -32,10 +35,12 @@ clean_ship <- ship_data_record %>%
 )
 
 # Cleaning the bird_data_record
+# Before doing any manual cleaning, it is good to make use of the janitor package that will clean
+# much of what needs to be changed in the column names.
+# A reason for using janitor for this sheet and not the previous one was some of the column names were
+# particularly messy and needed fixed before manual interaction.
 
 clean_birds_cols <- tibble::as_tibble(bird_data_record, .name_repair = janitor::make_clean_names)
-
-pattern <- "AD|IMM|SUBAD|SUB|JUV|PL1|PL2|PL3|PL4|PL5"
 
 recleaned_birds <- clean_birds %>%
   select(

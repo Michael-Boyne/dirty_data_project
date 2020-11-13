@@ -1646,8 +1646,14 @@ summary {
 </div>
 
 
-<div id="package-loadin" class="section level1">
-<h1>Package loadin</h1>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This task included four sheets in the xls file <code>seabirds.xls</code> that report on birds that are spotted on ships.</p>
+<p>The dataset that I created was built to serve the purpose of answering these questions. Much of the data from the seabird.xls was fairly unnecessary for the purposes of answering these questions.</p>
+<p>Some of the assumptions I made in cleaning the data, was that any bird_count that has the value of NA should be removed, since it is hard to argue what that value should be. If I were able to talk to those who collected the data it would have been easier whether or not to allocate a value to the NA’s.</p>
+<p>Two “code” sheets also accompanied the main two “record” sheets. For the most part these two code sheets provided that wasnt of much use, however it was useful in indicating which data has essentially been duplicated across columns in the record sheets.</p>
+<div id="package-loadin" class="section level3">
+<h3>Package loadin</h3>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
@@ -1664,9 +1670,9 @@ summary {
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(stringr)
-library(readr)
 library(dplyr)
 library(tidyr)</code></pre>
+</div>
 <div id="reading-in-the-clean-data-from-csv-created-by-the-cleaning-script" class="section level3">
 <h3>Reading in the clean data from csv created by the cleaning script</h3>
 <pre class="r"><code>bird_ship &lt;- read_csv(&quot;~/dirty_data_project/task_03/clean_data/clean_bird_ship.csv&quot;)</code></pre>
@@ -1684,6 +1690,34 @@ library(tidyr)</code></pre>
 ##   longitude = col_double(),
 ##   east_or_west_hemisphere = col_character()
 ## )</code></pre>
+</div>
+<div id="verifying-the-data" class="section level3">
+<h3>Verifying the data</h3>
+<pre class="r"><code>str(bird_ship)</code></pre>
+<pre><code>## tibble [46,320 × 10] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ record                 : num [1:46320] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ record_id              : num [1:46320] 1083001 1083001 1083001 1083001 1083001 ...
+##  $ species_common_name    : chr [1:46320] &quot;Royal / Wandering albatross&quot; &quot;Black-browed albatross sensu lato&quot; &quot;Cape petrel&quot; &quot;Fairy prion&quot; ...
+##  $ species_scientific_name: chr [1:46320] &quot;Diomedea epomophora / sanfordi / antipodensis / exulans&quot; &quot;Diomedea impavida / melanophrys&quot; &quot;Daption capense&quot; &quot;Pachyptila turtur&quot; ...
+##  $ species_abbreviation   : chr [1:46320] &quot;DIOEPOSANANTEXU&quot; &quot;DIOIMPMEL&quot; &quot;DAPCAP&quot; &quot;PACTUR&quot; ...
+##  $ bird_count             : num [1:46320] 6 2 8 2 4 10 2 18 10 2 ...
+##  $ date                   : POSIXct[1:46320], format: &quot;1975-10-15&quot; &quot;1975-10-15&quot; ...
+##  $ latitude               : num [1:46320] -45.9 -45.9 -45.9 -45.9 -45.9 ...
+##  $ longitude              : num [1:46320] 165 165 165 165 165 ...
+##  $ east_or_west_hemisphere: chr [1:46320] &quot;Eastern Hemisphere&quot; &quot;Eastern Hemisphere&quot; &quot;Eastern Hemisphere&quot; &quot;Eastern Hemisphere&quot; ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   record = col_double(),
+##   ..   record_id = col_double(),
+##   ..   species_common_name = col_character(),
+##   ..   species_scientific_name = col_character(),
+##   ..   species_abbreviation = col_character(),
+##   ..   bird_count = col_double(),
+##   ..   date = col_datetime(format = &quot;&quot;),
+##   ..   latitude = col_double(),
+##   ..   longitude = col_double(),
+##   ..   east_or_west_hemisphere = col_character()
+##   .. )</code></pre>
 </div>
 </div>
 <div id="analysis-questions" class="section level1">

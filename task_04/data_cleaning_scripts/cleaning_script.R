@@ -14,8 +14,6 @@ boing_boing_candy_sixteen <- read_xlsx("raw_data/boing-boing-candy-2016.xlsx")
 boing_boing_candy_seventeen <- read_xlsx("raw_data/boing-boing-candy-2017.xlsx")
 
 # Cleaning columns before join
-# Before doing any manual cleaning, it is good to make use of the janitor package that will clean
-# much of what needs to be changed in the fil
 
 clean_col_fifteen <- tibble::as.tibble(boing_boing_candy_fifteen, .name_repair = janitor::make_clean_names)
 clean_col_sixteen <- tibble::as.tibble(boing_boing_candy_sixteen, .name_repair = janitor::make_clean_names)

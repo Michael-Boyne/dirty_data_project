@@ -1,5 +1,5 @@
 
-# Package loadin
+# Package load-in
 
 library(tidyverse)
 library(assertr)
@@ -11,6 +11,8 @@ library(stringr)
 
 ship_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 1)
 bird_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 2)
+
+# I decided to clean the two scripts individually before joining.
 
 # Cleaning the ship_data_record
 # The only columns that were really necessary to answer the questions were the record_id (which

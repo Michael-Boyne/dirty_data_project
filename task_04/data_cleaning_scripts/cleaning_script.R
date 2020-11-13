@@ -1,21 +1,27 @@
+
+# Package load-out
+
 library(tidyverse)
 library(assertr)
 library(tidyr)
 library(readxl)
 library(janitor)
 
+# Reading in the three xls files
 
 boing_boing_candy_fifteen <- read_xlsx("raw_data/boing-boing-candy-2015.xlsx")
 boing_boing_candy_sixteen <- read_xlsx("raw_data/boing-boing-candy-2016.xlsx")
 boing_boing_candy_seventeen <- read_xlsx("raw_data/boing-boing-candy-2017.xlsx")
 
 # Cleaning columns before join
+# Before doing any manual cleaning, it is good to make use of the janitor package that will clean
+# much of what needs to be changed in the fil
 
 clean_col_fifteen <- tibble::as.tibble(boing_boing_candy_fifteen, .name_repair = janitor::make_clean_names)
 clean_col_sixteen <- tibble::as.tibble(boing_boing_candy_sixteen, .name_repair = janitor::make_clean_names)
 clean_col_seventeen <- tibble::as.tibble(boing_boing_candy_seventeen, .name_repair = janitor::make_clean_names)
 
-# 2015
+# cleaning the data for 2015
 
 clean_col_fifteen$year <- "2015"
 
@@ -109,9 +115,6 @@ clean_col_seventeen <- clean_col_seventeen %>%
 
 full_candy<- bind_rows(clean_col_fifteen,clean_col_sixteen, clean_col_seventeen)
 
-country_pattern <- "us|Us|US|"
-
-country_na_pattern <- 
 
 clean_full_candy <- full_candy %>%
   mutate(
@@ -198,35 +201,36 @@ clean_full_candy <- full_candy %>%
     country = str_replace(country, "USA!!!", "USA"), 
     country = str_replace(country, "USA!", "USA"),
     country = str_replace(country, "USA (I think but it's an election year so who can really tell)", "USA"),
-    country = recode(country, 
-                    "Scotland" = "United Kingdom",
-                    "endland" = "United Kingdom",
-                    "USA (I think but it's an election year so who can really tell)" = "USA",
-                    "uk" = "United Kingdom",
-                    "england" = "United Kingdom",
-                    "USA? Hard to tell anymore.." = "USA",
-                    "spain" = "Spain",
-                    "Uk" = "United Kingdom",
-                    "Canada`" = "Canada",
-                    "netherlands" = "The Netherlands",
-                    "Netherlands" = "The Netherlands",
-                    "kenya" = "Kenya",
-                    "germany" = "Germany",
-                    "South africa" = "South Africa",
-                    "cascadia" = "USA",
-                    "The republic of Cascadia" = "USA",
-                    "sweden" = "Sweden",
-                    "AUSAtria" = "Austrlia",
-                    "AUSAtralia" = "Australia",
-                    "españa" = "Spain",
-                    "Cascadia" = "USA",
-                    "England" = "United Kingdom",
-                    "croatia" = "Croatia",
-                    "belgium" = "Belgium",
-                    "Korea" = "South Korea",
-                    "france" = "France",
-                    "UK" = "United Kingdom",
-                    "hungary" = "Hungary"
+    country = recode(country,
+                     ""
+                     "Scotland" = "United Kingdom",
+                     "endland" = "United Kingdom",
+                     "USA (I think but it's an election year so who can really tell)" = "USA",
+                     "uk" = "United Kingdom",
+                     "england" = "United Kingdom",
+                     "USA? Hard to tell anymore.." = "USA",
+                     "spain" = "Spain",
+                     "Uk" = "United Kingdom",
+                     "Canada`" = "Canada",
+                     "netherlands" = "The Netherlands",
+                     "Netherlands" = "The Netherlands",
+                     "kenya" = "Kenya",
+                     "germany" = "Germany",
+                     "South africa" = "South Africa",
+                     "cascadia" = "USA",
+                     "The republic of Cascadia" = "USA",
+                     "sweden" = "Sweden",
+                     "AUSAtria" = "Austrlia",
+                     "AUSAtralia" = "Australia",
+                     "españa" = "Spain",
+                     "Cascadia" = "USA",
+                     "England" = "United Kingdom",
+                     "croatia" = "Croatia",
+                     "belgium" = "Belgium",
+                     "Korea" = "South Korea",
+                     "france" = "France",
+                     "UK" = "United Kingdom",
+                     "hungary" = "Hungary"
                     ),
     country = na_if(country, "Fear and Loathing"),
     country = na_if(country, "sUSAribe to dm4uz3 on youtube"),

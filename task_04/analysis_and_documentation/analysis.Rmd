@@ -1,8 +1,9 @@
 ---
-title: "Analysis"
+title: "Task 4 - Halloween Candy"
 output: html_notebook
 ---
 
+### Package loadin 
 ```{r}
 library(tidyverse)
 library(stringr)
@@ -11,12 +12,14 @@ library(dplyr)
 library(tidyr)
 ```
 
+### Modifying the column types for 'country' and 'gender' so that they are character columns
 ```{r}
 clean_candy <- read_csv("../clean_data/clean_candy.csv", col_types = cols(country = col_character(), gender = col_character()))
 ```
 
+### Verifying the data 
 ```{r}
-clean_candy
+str(clean_candy)
 ```
 
 

@@ -1,12 +1,18 @@
+
+# Package loadin
+
 library(tidyverse)
 library(assertr)
 library(readxl)
 library(janitor)
 library(stringr)
 
+# Reading in the two xls files
 
 ship_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 1)
 bird_data_record <- read_excel("~/dirty_data_project/task_03/data/seabirds.xls", sheet = 2)
+
+# Cleaning the ship_data_record
 
 clean_ship <- ship_data_record %>%
   select(-c(RECORD, TIME, SACT:LONGECELL)
@@ -25,6 +31,7 @@ clean_ship <- ship_data_record %>%
   drop_na(
 )
 
+# Cleaning the bird_data_record
 
 clean_birds_cols <- tibble::as_tibble(bird_data_record, .name_repair = janitor::make_clean_names)
 
@@ -75,10 +82,13 @@ recleaned_birds <- clean_birds %>%
     species_abbreviation = str_remove(species_abbreviation, "PL3"),
     species_abbreviation = str_remove(species_abbreviation, "PL4"),
     species_abbreviation = str_remove(species_abbreviation, "PL5")
-  )
+  ) %>%
+  drop_na(bird_count)
 
-recleaned_birds[!is.na(recleaned_birds$bird_count)]
+# Using a left join on the two tables
 
 clean_bird_ship <- left_join(recleaned_birds, clean_ship, "record_id")
+
+# writing a csv to use in my analysis
 
 write_csv(clean_bird_ship, "clean_data/clean_bird_ship.csv")

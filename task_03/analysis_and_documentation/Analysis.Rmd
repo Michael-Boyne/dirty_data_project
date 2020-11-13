@@ -1,13 +1,20 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Task 3 - Seabirds"
+output:
+  html_document:
+    df_print: paged
 ---
 
+# Package loadin
 ```{r}
 library(tidyverse)
-library(readxl)
+library(stringr)
+library(readr)
+library(dplyr)
+library(tidyr)
 ```
 
+### Reading in the clean data from csv created by the cleaning script
 ```{r}
 bird_ship <- read_csv("~/dirty_data_project/task_03/clean_data/clean_bird_ship.csv")
 ```
@@ -33,35 +40,45 @@ bird_ship %>%
 ```{r}
 bird_ship %>%
   group_by(species_common_name) %>%
-  summarise(total_count = sum(bird_count))
-  
-  
+  drop_na(bird_count) %>%
+  summarise(total_count = sum(bird_count)) %>%
+  slice_max(total_count)
+
 ```
 
 
 3. Which bird had the highest total count above a latitude of -30?
 
 ```{r}
-high_latitude <- bird_ship %>%
+bird_ship %>%
+  filter(latitude > -30) %>%
+  group_by(species_common_name) %>%
+  summarise(total_count = sum(bird_count)) %>%
+  slice_max(total_count)
   
-  
-  
+
 ```
 
 
 4. How many different types of birds were only ever seen in groups of 1?
 
 ```{r}
-
+bird_ship %>% 
+    filter(bird_count < 2)  %>% 
+        select(species_common_name, species_scientific_name, species_abbreviation) %>%
+        distinct() %>% 
+    arrange(species_abbreviation) %>% 
+    count()
 ```
 
 
 5. How many penguins were seen? (Hint: there are many types of penguin)
 
 ```{r}
-pattern <- "[Pp]enguin"
-
-bird_ship %>%
-  str_detect(pattern)
+bird_ship %>% 
+  filter(str_detect(species_common_name, "[Pp]enguin")) %>%
+  summarise(total_count = sum(bird_count))
+  
+  
 ```
 

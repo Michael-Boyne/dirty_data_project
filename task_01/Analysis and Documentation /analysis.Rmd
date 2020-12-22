@@ -1,0 +1,46 @@
+---
+title: "Task 1 - Analysis and Documentation"
+output: html_document
+---
+
+loading in packages and data
+
+```{r, warning=FALSE, results=FALSE}
+library(tidyverse)
+library(here)
+```
+
+```{r, echo=T, results=FALSE, warning=FALSE, error=FALSE, message=FALSE}
+decathalon <- read_csv(here("clean_data/clean_decathlon_ds.csv"))
+```
+
+### Question 1 
+Who had the longest long jump seen in the data?
+```{r}
+decathalon %>%
+  filter(event == "long_jump") %>%
+  arrange(desc(score)) %>%
+  slice_max(1)
+```
+
+### Question 2
+What was the average 100m time in each competition?
+```{r}
+decathalon %>%
+  filter(event == "one_hundred_meters") %>%
+  group_by(competition) %>%
+  summarise(average_time = mean(score))
+```
+
+### Question 3
+Who had the highest total points across both competitions?
+```{r}
+
+```
+
+### Question 4
+What was the shot-put scores for the top three competitors in each competition?
+
+### Question 5
+What was the average points for competitors who ran the 400m in less than 50 seconds vs. those than ran 400m in more than 50 seconds?
+

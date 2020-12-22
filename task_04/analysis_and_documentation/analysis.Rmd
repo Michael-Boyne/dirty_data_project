@@ -107,9 +107,8 @@ mutated_clean_candy %>%
   mutate(country = if_else(country %in% c("USA", "Canada", "United Kingdom"), country, "other")) %>%
   filter(year != 2015) %>%
   group_by(country, candy) %>%
-  summarise(total_preference = sum(rating_count)) %>%
-  filter(candy != "any_full_sized_candy_bar") %>%
-  slice_max(total_preference)
+  summarise(fav_candy = sum(rating_count)) %>%
+  slice_max(fav_candy)
 ```
 
 

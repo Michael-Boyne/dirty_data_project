@@ -35,12 +35,32 @@ decathalon %>%
 ### Question 3
 Who had the highest total points across both competitions?
 ```{r}
-
+decathalon %>%
+  distinct(surname, competition, points) %>%
+  group_by(surname) %>%
+  summarise(total_points = sum(points)) %>%
+  arrange(desc(total_points)) %>%
+  slice_max(1)
 ```
 
 ### Question 4
 What was the shot-put scores for the top three competitors in each competition?
+```{r}
+decathalon %>%
+  filter(event == "shot_put") %>%
+  filter(rank < 4) 
+```
 
 ### Question 5
 What was the average points for competitors who ran the 400m in less than 50 seconds vs. those than ran 400m in more than 50 seconds?
+```{r}
+decathalon %>%
+  filter(event == "four_hundred_meters") %>%
+  mutate(fast_400 = score < 50) %>%
+  group_by(fast_400) %>%
+  summarise(average_points = mean(points)) 
+  
+```
+
+
 

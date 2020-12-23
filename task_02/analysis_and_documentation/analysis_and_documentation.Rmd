@@ -1,0 +1,71 @@
+---
+title: "Task 2 - Analysis and Documentation"
+output: html_document
+---
+
+loading in packages and data
+
+```{r, warning=FALSE, results=FALSE}
+library(tidyverse)
+library(here)
+```
+
+```{r, echo=T, results=FALSE, warning=FALSE, error=FALSE, message=FALSE}
+cake <- read_csv(here("clean_data/cake.csv"))
+```
+
+### Question 1 
+Which cake has the most cocoa in it?
+```{r}
+cake %>%
+  filter(ingredient == "Cocoa") %>%
+  arrange(desc(ingredient)) %>%
+  slice_max(1)
+```
+
+### Question 2
+For sponge cake, how many cups of ingredients are used in total?
+```{r}
+cake %>%
+  filter(cake == "Sponge") %>%
+  filter(measure == "cup") %>%
+  nrow()
+```
+
+### Question 3 
+How many ingredients are measured in teaspoons?
+```{r}
+cake %>%
+  filter(measure == "teaspoon") %>%
+  summarise(ingre_teaspoon = n_distinct(ingredient))
+```
+
+### Question 4 
+Which cake has the most unique ingredients?
+```{r}
+cake %>%
+  group_by(cake) %>%
+  summarise(num_of_ingredients = n()) %>%
+  arrange(desc(num_of_ingredients)) %>%
+  slice_head(n = 2)
+```
+
+### Question 5 
+Which ingredients are used only once?
+```{r}
+cake %>%
+  group_by(ingredient) %>%
+  summarise(num_cake = n()) %>%
+  filter(num_cake == 1)
+```
+
+### Question 6 (my own question)
+Average number of ingredients in a cake
+```{r}
+cake %>%
+  group_by(cake) %>%
+  summarise(num_ingredients = n()) %>%
+  summarise(avg_ingr = mean(num_ingredients))
+```
+
+

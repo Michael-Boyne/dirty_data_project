@@ -1,4 +1,4 @@
-# Decathlon script ------------------------------------------------------------ 
+# Decathlon cleaning script -------------------------------------------------
 
 # library loadout
 library(tidyverse)
@@ -26,6 +26,8 @@ decathlon_rework <- decathlon %>%
     competition = as.character(competition)
   ) %>%
   pivot_longer(one_hundred_meters:fifteen_hundred_meters, names_to = "event", values_to = "score")
+
+# writing clean csv
 
 write_csv(decathlon_rework, "clean_data/clean_decathlon_ds.csv")
 
